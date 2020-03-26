@@ -11,14 +11,23 @@ A parent is responsible for each pupil (unless the pupil is a self-entitled guar
 
 ![ER-Model](school_erm.jpeg)
 
-## Relational Model
-**primary key**
-*foreign key*
+second draft:
 
-* Teacher (**teacher-ID:int**, name:varchar(32), address:varchar(32), dateOfBirth:date, master_department:varchar(32), additional_department:varchar(32), classes:varchar(32))
-* Department (**department-ID:int**, name:varchar(32), head_of_department:varchar(32), _form_of_education-ID:varchar(32)_)
-* Curriculum (**_department-ID:int_**, **_subject-ID:int(32)_**, year:int, theory:boolean, practice:boolean, _teacher-ID:int_)
-* Form of Education (**form_of_education-ID:int**, theory:boolean, practice:boolean)
-* Subject (**subject-ID:int**, teaching_group:char, factor:double, value:int)
-* Student (**student-ID:int**,  name:varchar(32), address:varchar(32), dateOfBirth:date, semester:int, _form_of_education-ID:varchar(32)_, has_sibling:boolean, function:varchar(32))
-* Parent (**personal-ID:int**, *student-ID:int*, name:varchar(32), address:varchar(32), phone_number:varchar(32), dateOfBirth:date)
+![School-ERM](school2.jpeg)
+
+## Relational Model (updated to second draft)
+
+* Teacher (**teacher_ID:varchar(10)**, *department_allocation_ID:int*, *subjectlist_ID:int*, first_name:varchar(20), last_name:varchar(20), phone:varchar(20), email:varchar(32), date_of_birth:date, value_units:int)
+* Department (**department_ID:int**, *department_allocation_ID:int*, name:varchar(20), head_of_department:varchar(10))
+* Department Allocation (**department_allocation_ID:int**, *teacher_ID:varchar(10)*,  *department_ID:int*)
+* Subject (**subject_ID:int**, *teaching_group_ID:int*, *subjectlist_ID:int*, *curriculum_ID:int*, *gradelist_ID:int*, name:varchar(32), classroom:varchar(10))
+* Form of Education (**eduform_ID:int**, *curriculum_ID:int*, *class_ID:varchar(5), name:varchar(32), regular_class:boolean, evening_course:boolean)
+* Class (**class_ID:varchar(5)**, **year:int**, *eduform_ID:int*, *student_ID:int*)
+* Subjectlist (**subjectlist_ID:int**, *subject_ID:int*, *teacher_ID:varchar(10)*)
+* Curriculum (**curriculum_ID:int**, *subject_ID:int*, *eduform_ID:int*, year:int, semester:int, is_theory:boolean, is_practice:boolean)
+* Teaching Group (**teaching_group_ID:int**, *subject_ID:int*, factor:double)
+* Student (**student_ID:int**, *class_ID:varchar(5)*, *gradelist_ID:int*, *parent_ID:int*, *siblinglist_ID:int*, first_name:varchar(20), last_name:varchar(20), phone:varchar(20), email:varchar(32), date_of_birth:date, semester:int, function:varchar(20))
+* Parent (**parent_ID:int**, *student_ID:int*, first_name:varchar(20), last_name:varchar(20), phone:varchar(20), email:varchar(32))
+* Gradelist (**gradelist_ID:int**, *student_ID:int*, *subject_ID:int*, semester:int, year:int, grade:int)
+* Siblinglist (**siblinglist_ID:int**, *student_ID:int*, *sibling_ID:*)
+
